@@ -12,10 +12,11 @@ import { ConfigService } from '@nestjs/config';
   imports: [
     TypeOrmModule.forFeature([User, Role]),
     JwtModule.registerAsync({
+      global: true,
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: config.get('JWT_EXPIRES_IN', '7d') as `${number}d` },
+        secret: config.getOrThrow<string>('JWT_SECRET'),
+        signOptions: { expiresIn: config.get('JWT_EXPIRES_IN', '1d') as `${number}d` },
       }),
     }),
     MailModule,
