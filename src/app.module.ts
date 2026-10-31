@@ -9,7 +9,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from './config/ database.config.js';
 import { AuthModule } from './modules/auth/auth.module.js';
-import { AdminController } from './module/admin/admin.controller.js';
+import { AdminModule } from './modules/admin/admin.module.js';
+
 
 
 @Module({
@@ -24,8 +25,9 @@ import { AdminController } from './module/admin/admin.controller.js';
     MessagesModule,
     SettingsModule,
     AuthModule,
+    AdminModule
   ],
-  controllers: [AppController, AdminController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

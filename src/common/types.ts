@@ -1,10 +1,4 @@
-import { UserType } from './enums/user-type.enum.js';
+import { RoleName } from './enums/role-name.enum.js';
 
-export type jwtPayloadType = {
-    id: string;
-    userType: UserType;
-}
-
-export type accessTokenType = {
-    token: string;
-}
+export type jwtPayloadType = { id: string };
+export type authUserType = { id: string; role: RoleName };

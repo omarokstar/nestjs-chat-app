@@ -16,4 +16,12 @@ export class UsersService {
         }
         return user;
     }
+
+    findAuthState(id: string) {
+        return this.usersRepository.findOne({
+            where: { id },
+            select: { id: true, isBlocked: true },
+            relations: { role: true },
+        });
 }
+}   

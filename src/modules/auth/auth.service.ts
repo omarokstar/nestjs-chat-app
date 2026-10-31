@@ -26,8 +26,8 @@ export class AuthService {
 
     public async register(registerDto: RegisterDto) {
         const { email, username, password } = registerDto;
-        const userFromDb = await this.usersRepository.findOne({ where: { email } });
-        if (userFromDb) {
+        const existing = await this.usersRepository.findOne({ where: [{ email }, { username }] });
+        if (existing) {
             throw new BadRequestException("User already exists");
         }
         const hashedPassword = await this.hashPassword(password);
@@ -81,8 +81,8 @@ export class AuthService {
             this.mailService.sendEmailVerification(user.email, link);
             return { message: "Please check your email to verify your account" };
         }
-        const token = await this.generateJwtToken({ id: user.id, userType: user.userType });
-        return { token, user: { id: user.id, username: user.username, email: user.email, userType: user.userType } };
+        const token = await this.generateJwtToken({ id: user.id });
+        return { token, user: { id: user.id, username: user.username, email: user.email, role: user.role.name } };
     }
 
     public async verifyEmail(userId: string, emailToken: string) {
