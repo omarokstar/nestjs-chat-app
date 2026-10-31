@@ -57,6 +57,7 @@ export class AuthService {
         const user = await this.usersRepository
             .createQueryBuilder('user')
             .addSelect('user.passwordHash')
+            .leftJoinAndSelect('user.role', 'role') 
             .where('user.email = :email', { email })
             .getOne();
 
